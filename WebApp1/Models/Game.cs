@@ -28,6 +28,7 @@ namespace WebApp1.Models
         [DataType(DataType.Currency)]
         public decimal Price { get; set; }
 
-
+        public int StudioId { get; set; }
+        public Studio Studio { get; set; }
     }
 }
