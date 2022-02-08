@@ -95,8 +95,7 @@ namespace WebApp1.Data
                         Descriprion = "A Mafia-like social game based on deseption and deduction",
                         ReleaseDate = DateTime.Parse("2018-11-13"),
                         Genre = "Social Deduction",
-                        Price = 19.99M,
-                        Studio = "Innersloth"
+                        Price = 19.99M
                     },
                     new Game
                     {
@@ -104,8 +103,7 @@ namespace WebApp1.Data
                         Descriprion = "A popular tactical FPS",
                         ReleaseDate = DateTime.Parse("2016-7-13"),
                         Genre = "FPS",
-                        Price = 39.99M,
-                        Studio = "Valve"
+                        Price = 39.99M
                     },
                     new Game
                     {
@@ -113,8 +111,7 @@ namespace WebApp1.Data
                         Descriprion = "The only aim in Rust is to survive. Everything wants you to die - the island’s wildlife and other inhabitants, the environment, other survivors. Do whatever it takes to last another night.",
                         ReleaseDate = DateTime.Parse("2018-2-8"),
                         Genre = "Survival",
-                        Price = 39.99M,
-                        Studio = "Facepunch Studios"
+                        Price = 39.99M
                     },
                     new Game
                     {
@@ -122,8 +119,7 @@ namespace WebApp1.Data
                         Descriprion = "As the lone survivor of a passenger jet crash, you find yourself in a mysterious forest battling to stay alive against a society of cannibalistic mutants.",
                         ReleaseDate = DateTime.Parse("2018-4-30"),
                         Genre = "Survival",
-                        Price = 29.99M,
-                        Studio = "Endnight Games Ltd"
+                        Price = 29.99M
                     },
                     new Game
                     {
@@ -131,8 +127,7 @@ namespace WebApp1.Data
                         Descriprion = "When the sky opens up and rains down chaos, the world needs heroes. Become the savior of Thedas in Dragon Age: Inquisition. You are the Inquisitor, tasked with saving the world from itself. But the road ahead is paved with difficult decisions. Thedas is a land of strife.",
                         ReleaseDate = DateTime.Parse("2014-11-14"),
                         Genre = "RPG",
-                        Price = 49.99M,
-                        Studio = "BioWare"
+                        Price = 49.99M
                     },
                     new Game
                     {
@@ -140,8 +135,7 @@ namespace WebApp1.Data
                         Descriprion = "As war rages on throughout the Northern Realms, you take on the greatest contract of your life — tracking down the Child of Prophecy, a living weapon that can alter the shape of the world.",
                         ReleaseDate = DateTime.Parse("2015-5-18"),
                         Genre = "RPG",
-                        Price = 29.99M,
-                        Studio = "CD PROJEKT RED"
+                        Price = 29.99M
                     }
                     );
             context.SaveChanges();

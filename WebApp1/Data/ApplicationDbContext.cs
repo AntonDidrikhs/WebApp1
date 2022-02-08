@@ -11,6 +11,5 @@ namespace WebApp1.Data
         {
         }
         public DbSet<Game> Game { get; set; }
-        public DbSet<WebApp1.Models.Transaction> Transaction { get; set; }
     }
 }

@@ -28,8 +28,6 @@ namespace WebApp1.Models
         [DataType(DataType.Currency)]
         public decimal Price { get; set; }
 
-        [StringLength(60, MinimumLength = 3)]
-        public string? Studio { get; set; }
 
     }
 }
