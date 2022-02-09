@@ -7,7 +7,6 @@ namespace WebApp1.Models
     {
         [Key]
         public int CategoryId { get; set; }
-        [Display(Name = "Category")]
         public string CategoryName { get; set; }
         [ValidateNever]
         public List<Game> Games { get; set; }
