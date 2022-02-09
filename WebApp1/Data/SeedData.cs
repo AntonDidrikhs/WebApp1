@@ -16,6 +16,7 @@ namespace WebApp1.Data
                 var adminID = await EnsureUser(serviceProvider, testUserPw, "admin@admin.com");
                 await EnsureRole(serviceProvider, adminID, Constants.ContactAdministratorsRole);
 
+                SeedDBCategory(context, testUserPw);
                 SeedDBStudio(context, testUserPw);
                 SeedDBGames(context, testUserPw);
             }
@@ -98,6 +99,34 @@ namespace WebApp1.Data
                 );
             context.SaveChanges();
         }
+
+        public static void SeedDBCategory(ApplicationDbContext context, string adminID)
+        {
+            if (context.Category.Any())
+            {
+                return;
+            }
+            context.Category.AddRange(
+                new Category
+                {
+                    CategoryName = "Released"
+                },
+                new Category
+                {
+                    CategoryName = "Top Seller"
+                },
+                new Category
+                {
+                    CategoryName = "Comming Soon"
+                },
+                new Category
+                {
+                    CategoryName = "New Release"
+                }
+                );
+            context.SaveChanges();
+        }
+
         public static void SeedDBGames(ApplicationDbContext context, string adminID)
         {
             if (context.Game.Any())
@@ -112,7 +141,8 @@ namespace WebApp1.Data
                         ReleaseDate = DateTime.Parse("2018-11-13"),
                         Genre = "Social Deduction",
                         Price = 19.99M,
-                        StudioId = 2
+                        StudioId = 2,
+                        CategoryId = 2
                     },
                     new Game
                     {
@@ -121,7 +151,8 @@ namespace WebApp1.Data
                         ReleaseDate = DateTime.Parse("2016-7-13"),
                         Genre = "FPS",
                         Price = 39.99M,
-                        StudioId = 2
+                        StudioId = 2,
+                        CategoryId = 2
                     },
                     new Game
                     {
@@ -130,7 +161,8 @@ namespace WebApp1.Data
                         ReleaseDate = DateTime.Parse("2018-2-8"),
                         Genre = "Survival",
                         Price = 39.99M,
-                        StudioId = 2
+                        StudioId = 2,
+                        CategoryId = 2
                     },
                     new Game
                     {
@@ -139,7 +171,8 @@ namespace WebApp1.Data
                         ReleaseDate = DateTime.Parse("2018-4-30"),
                         Genre = "Survival",
                         Price = 29.99M,
-                        StudioId = 2
+                        StudioId = 2,
+                        CategoryId = 2
                     },
                     new Game
                     {
@@ -148,7 +181,8 @@ namespace WebApp1.Data
                         ReleaseDate = DateTime.Parse("2014-11-14"),
                         Genre = "RPG",
                         Price = 49.99M,
-                        StudioId = 2
+                        StudioId = 2,
+                        CategoryId = 2
                     },
                     new Game
                     {
@@ -157,7 +191,8 @@ namespace WebApp1.Data
                         ReleaseDate = DateTime.Parse("2015-5-18"),
                         Genre = "RPG",
                         Price = 29.99M,
-                        StudioId = 2
+                        StudioId = 2,
+                        CategoryId = 2
                     }
                     );
             context.SaveChanges();

@@ -12,25 +12,24 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace WebApp1.Controllers
 {
-    public class GamesController : Controller
+    [Authorize(Roles = "Administrator")]
+    public class CategoriesController : Controller
     {
         private readonly ApplicationDbContext _context;
 
-        public GamesController(ApplicationDbContext context)
+        public CategoriesController(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        // GET: Games
-        [HttpGet]
-        [AllowAnonymous]
+        // GET: Categories
+        [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Game.Include(g => g.Category).Include(g => g.Studio).AsNoTracking();
-            return View(await applicationDbContext.ToListAsync());
+            return View(await _context.Category.ToListAsync());
         }
 
-        // GET: Games/Details/5
+        // GET: Categories/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -38,47 +37,41 @@ namespace WebApp1.Controllers
                 return NotFound();
             }
 
-            var game = await _context.Game
-                .Include(g => g.Category)
-                .Include(g => g.Studio)
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (game == null)
+            var category = await _context.Category
+                .FirstOrDefaultAsync(m => m.CategoryId == id);
+            if (category == null)
             {
                 return NotFound();
             }
 
-            return View(game);
+            return View(category);
         }
 
-        // GET: Games/Create
+        // GET: Categories/Create
         [Authorize(Roles = "Administrator")]
         public IActionResult Create()
         {
-            ViewData["CategoryId"] = new SelectList(_context.Category, "CategoryId", "CategoryId");
-            ViewData["StudioId"] = new SelectList(_context.Studio, "StudioId", "StudioId");
             return View();
         }
 
-        // POST: Games/Create
+        // POST: Categories/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Administrator")]
-        public async Task<IActionResult> Create([Bind("Id,Title,Descriprion,ReleaseDate,Genre,Price,StudioId,CategoryId")] Game game)
+        public async Task<IActionResult> Create([Bind("CategoryId,CategoryName")] Category category)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(game);
+                _context.Add(category);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CategoryId"] = new SelectList(_context.Category, "CategoryId", "CategoryId", game.CategoryId);
-            ViewData["StudioId"] = new SelectList(_context.Studio, "StudioId", "StudioId", game.StudioId);
-            return View(game);
+            return View(category);
         }
 
-        // GET: Games/Edit/5
+        // GET: Categories/Edit/5
         [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> Edit(int? id)
         {
@@ -87,40 +80,37 @@ namespace WebApp1.Controllers
                 return NotFound();
             }
 
-            var game = await _context.Game.FindAsync(id);
-            if (game == null)
+            var category = await _context.Category.FindAsync(id);
+            if (category == null)
             {
                 return NotFound();
             }
-            ViewData["CategoryId"] = new SelectList(_context.Category, "CategoryId", "CategoryId", game.CategoryId);
-            ViewData["StudioId"] = new SelectList(_context.Studio, "StudioId", "StudioId", game.StudioId);
-            return View(game);
+            return View(category);
         }
 
-        // POST: Games/Edit/5
+        // POST: Categories/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Administrator")]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Title,Descriprion,ReleaseDate,Genre,Price,StudioId,CategoryId")] Game game)
+        public async Task<IActionResult> Edit(int id, [Bind("CategoryId,CategoryName")] Category category)
         {
-            if (id != game.Id)
+            if (id != category.CategoryId)
             {
                 return NotFound();
             }
 
-            ModelState.ClearValidationState(nameof(Game));
             if (ModelState.IsValid)
             {
                 try
                 {
-                    _context.Update(game);
+                    _context.Update(category);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!GameExists(game.Id))
+                    if (!CategoryExists(category.CategoryId))
                     {
                         return NotFound();
                     }
@@ -131,12 +121,10 @@ namespace WebApp1.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CategoryId"] = new SelectList(_context.Category, "CategoryId", "CategoryId", game.CategoryId);
-            ViewData["StudioId"] = new SelectList(_context.Studio, "StudioId", "StudioId", game.StudioId);
-            return View(game);
+            return View(category);
         }
 
-        // GET: Games/Delete/5
+        // GET: Categories/Delete/5
         [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> Delete(int? id)
         {
@@ -145,33 +133,31 @@ namespace WebApp1.Controllers
                 return NotFound();
             }
 
-            var game = await _context.Game
-                .Include(g => g.Category)
-                .Include(g => g.Studio)
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (game == null)
+            var category = await _context.Category
+                .FirstOrDefaultAsync(m => m.CategoryId == id);
+            if (category == null)
             {
                 return NotFound();
             }
 
-            return View(game);
+            return View(category);
         }
 
-        // POST: Games/Delete/5
+        // POST: Categories/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var game = await _context.Game.FindAsync(id);
-            _context.Game.Remove(game);
+            var category = await _context.Category.FindAsync(id);
+            _context.Category.Remove(category);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool GameExists(int id)
+        private bool CategoryExists(int id)
         {
-            return _context.Game.Any(e => e.Id == id);
+            return _context.Category.Any(e => e.CategoryId == id);
         }
     }
 }

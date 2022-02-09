@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 
 namespace WebApp1.Models
 {
@@ -29,6 +30,11 @@ namespace WebApp1.Models
         public decimal Price { get; set; }
 
         public int StudioId { get; set; }
+        [ValidateNever]
         public Studio Studio { get; set; }
+
+        public int CategoryId { get; set; }
+        [ValidateNever]
+        public Category Category { get; set; }
     }
 }

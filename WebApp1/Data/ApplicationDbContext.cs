@@ -12,5 +12,6 @@ namespace WebApp1.Data
         }
         public DbSet<Game> Game { get; set; }
         public DbSet<Studio> Studio { get; set; }
+        public DbSet<Category> Category { get; set; }
     }
 }
